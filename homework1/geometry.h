@@ -17,6 +17,11 @@ public:
     // copy constructor
     Point(const Point& other);
 
+    void destruct()
+    {
+        delete this;
+    }
+
     float getX() const;
     float getY() const;
     void setX(float x);
@@ -38,10 +43,11 @@ public:
     // copy constructor
     PolygonalChain(const PolygonalChain& other);
 
-    unsigned int getPointsNumber() const;
-    Point getPointByNumber(unsigned int n) const;
+
+    unsigned int getN() const;
+    Point getPoint(unsigned int n) const;
     bool equals(const PolygonalChain& other) const;
-    float perimeter() const;
+    virtual float perimeter() const;
 };
 
 class ClosedPolygonalChain : public PolygonalChain
@@ -69,6 +75,20 @@ public:
     bool hasRightAngle() const;
 };
 
+class Trapezoid : public Polygon
+{
+public:
+    Trapezoid(unsigned int n = 0, Point *p = {});
+    Trapezoid(const Trapezoid& other);
+    float height() const;
+};
+
+class RegularPolygon : public Polygon
+{
+public:
+    RegularPolygon(unsigned int n = 0, Point* p = {});
+    RegularPolygon(const RegularPolygon& other);
+};
 
 
 #endif //HOMEWORK1_GEOMETRY_H

@@ -1,5 +1,6 @@
 #include "geometry.h"
 #include <math.h>
+#include <iostream>
 
 bool equalsf(float a, float b)
 {
@@ -63,32 +64,32 @@ PolygonalChain::PolygonalChain(unsigned int n, Point *p)
     }
 }
 
-PolygonalChain::PolygonalChain(const PolygonalChain &other)
+PolygonalChain::PolygonalChain(const PolygonalChain& other)
 {
-    points_number_ = other.getPointsNumber();
-    for (int i = 0; i < getPointsNumber(); i++)
+    points_number_ = other.getN();
+    for (int i = 0; i < getN(); i++)
     {
-        points_.push_back(other.getPointByNumber(i));
+        points_.push_back(other.getPoint(i));
     }
 }
 
-unsigned int PolygonalChain::getPointsNumber() const
+unsigned int PolygonalChain::getN() const
 {
     return points_number_;
 }
 
-Point PolygonalChain::getPointByNumber(unsigned int n) const
+Point PolygonalChain::getPoint(unsigned int n) const
 {
     return points_.at(n);
 }
 
 bool PolygonalChain::equals(const PolygonalChain &other) const
 {
-    if (getPointsNumber() == other.getPointsNumber())
+    if (getN() == other.getN())
     {
-        for (int i = 0; i < getPointsNumber(); i++)
+        for (int i = 0; i < getN(); i++)
         {
-            if (!getPointByNumber(i).equals(other.getPointByNumber(i)))
+            if (!getPoint(i).equals(other.getPoint(i)))
                 return false;
         }
         return true;
@@ -99,9 +100,9 @@ bool PolygonalChain::equals(const PolygonalChain &other) const
 float PolygonalChain::perimeter() const
 {
     float perimeter = 0;
-    for (int i = 0; i < getPointsNumber() - 1; i++)
+    for (int i = 0; i < getN() - 1; i++)
     {
-        perimeter += getPointByNumber(i).distance(getPointByNumber(i + 1));
+        perimeter += getPoint(i).distance(getPoint(i + 1));
     }
     return perimeter;
 }
@@ -118,11 +119,11 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& other) : 
 float ClosedPolygonalChain::perimeter() const
 {
     float perimeter = 0;
-    for (int i = 0; i < getPointsNumber() - 1; i++)
+    for (int i = 0; i < getN() - 1; i++)
     {
-        perimeter += getPointByNumber(i).distance(getPointByNumber(i + 1));
+        perimeter += getPoint(i).distance(getPoint(i + 1));
     }
-    perimeter += getPointByNumber(getPointsNumber() - 1).distance(getPointByNumber(0));
+    perimeter += getPoint(getN() - 1).distance(getPoint(0));
     return perimeter;
 }
 
@@ -133,7 +134,7 @@ Polygon::Polygon(unsigned int n, Point *p) : ClosedPolygonalChain(n, p)
 
 }
 
-Polygon::Polygon(const Polygon &other) : ClosedPolygonalChain(other)
+Polygon::Polygon(const Polygon& other) : ClosedPolygonalChain(other)
 {
 
 }
@@ -141,30 +142,34 @@ Polygon::Polygon(const Polygon &other) : ClosedPolygonalChain(other)
 float Polygon::area() const
 {
     float area = 0;
-    for (int i = 0; i < getPointsNumber() - 1; i++)
+
+    for (int i = 0; i < getN() - 1; i++)
     {
-        area += abs(getPointByNumber(i).getX() * getPointByNumber(i + 1).getY() - getPointByNumber(i + 1).getX() * getPointByNumber(i).getY());
+        area += abs(getPoint(i).getX() * getPoint(i + 1).getY() - getPoint(i + 1).getX() *
+                                                                  getPoint(i).getY());
     }
-    area += abs(getPointByNumber(getPointsNumber() - 1).getX() * getPointByNumber(0).getY() - getPointByNumber(0).getX() * getPointByNumber(getPointsNumber()).getY());
+    area += abs(getPoint(getN() - 1).getX() * getPoint(0).getY() - getPoint(0).getX() *
+                                                                   getPoint(getN() - 1).getY());
     area /= 2;
+
     return area;
 }
 
 
 
 Triangle::Triangle(unsigned int n, Point *p) : Polygon(n, p)
-{
-}
+{}
 
-Triangle::Triangle(const Triangle &other) : Polygon(other) {}
+Triangle::Triangle(const Triangle& other) : Polygon(other)
+{}
 
 bool Triangle::isRegular() const
 {
     float eps = 0.000001;
     float a, b, c;
-    a = getPointByNumber(0).distance(getPointByNumber(1));
-    b = getPointByNumber(1).distance(getPointByNumber(2));
-    c = getPointByNumber(2).distance(getPointByNumber(0));
+    a = getPoint(0).distance(getPoint(1));
+    b = getPoint(1).distance(getPoint(2));
+    c = getPoint(2).distance(getPoint(0));
 
     if (abs(a - b) < eps && abs(b - c) < eps && abs(c - a) < eps)
         return true;
@@ -175,9 +180,9 @@ bool Triangle::hasRightAngle() const
 {
     float eps = 0.000001;
     float a, b, c, hyp, leg_1, leg_2;
-    a = getPointByNumber(0).distance(getPointByNumber(1));
-    b = getPointByNumber(1).distance(getPointByNumber(2));
-    c = getPointByNumber(2).distance(getPointByNumber(0));
+    a = getPoint(0).distance(getPoint(1));
+    b = getPoint(1).distance(getPoint(2));
+    c = getPoint(2).distance(getPoint(0));
 
     if (a > b)
     {
@@ -217,3 +222,26 @@ bool Triangle::hasRightAngle() const
         return true;
     return false;
 }
+
+
+
+Trapezoid::Trapezoid(unsigned int n, Point *p) : Polygon(n, p) {}
+
+Trapezoid::Trapezoid(const Trapezoid &other) : Polygon(other) {}
+
+float Trapezoid::height() const
+{
+    float base_1 = getPoint(1).distance(getPoint(2));
+    float base_2 = getPoint(0).distance(getPoint(3));
+
+    printf("%d/(%d + %d)\n", area(), base_1, base_2);
+
+    return area()/(base_1 + base_2);
+}
+
+
+
+RegularPolygon::RegularPolygon(unsigned int n, Point *p) : Polygon(n, p)
+{}
+
+RegularPolygon::RegularPolygon(const RegularPolygon &other) : Polygon(other) {}
