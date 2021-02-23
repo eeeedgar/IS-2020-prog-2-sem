@@ -1,0 +1,3 @@
+C:/repos/algorithms/lab_6/task_A/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/repos/algorithms/lab_6/task_A/cmake-build-debug/CMakeFiles/task_A.dir
+C:/repos/algorithms/lab_6/task_A/cmake-build-debug/CMakeFiles/rebuild_cache.dir
