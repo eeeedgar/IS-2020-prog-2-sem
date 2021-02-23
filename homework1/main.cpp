@@ -36,7 +36,7 @@ void PolygonsCheck() {
 
     assert(p.area() == 6);
 
-    printf("p.area %d\n", p.area());
+    printf("p.area %f\n", p.area());
 
     assert(abs(tr.height() - 4) < EPS);
     assert(t.hasRightAngle());
@@ -54,14 +54,5 @@ void PolygonsCheck() {
 }
 
 int main() {
-
-    PointCheck();
     PolygonsCheck();
-
-
-    Point *a = new Point[3]{Point(0, 0), Point(3, 4), Point(3, 0)};
-    Point *b = new Point[4]{Point(0, 0), Point(1, 4), Point(3, 4), Point(3, 0)};
-    Polygon t (3, a);
-    Polygon p (4, b);
-    printf("%d %d\n", t.area(), p.area());
 }

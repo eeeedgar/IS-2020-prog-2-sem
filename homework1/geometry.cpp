@@ -145,12 +145,12 @@ float Polygon::area() const
 
     for (int i = 0; i < getN() - 1; i++)
     {
-        area += abs(getPoint(i).getX() * getPoint(i + 1).getY() - getPoint(i + 1).getX() *
+        area += (getPoint(i).getX() * getPoint(i + 1).getY() - getPoint(i + 1).getX() *
                                                                   getPoint(i).getY());
     }
-    area += abs(getPoint(getN() - 1).getX() * getPoint(0).getY() - getPoint(0).getX() *
+    area += (getPoint(getN() - 1).getX() * getPoint(0).getY() - getPoint(0).getX() *
                                                                    getPoint(getN() - 1).getY());
-    area /= 2;
+    area = ((float)abs(area))/2.0;
 
     return area;
 }
