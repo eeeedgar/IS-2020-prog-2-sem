@@ -234,9 +234,7 @@ float Trapezoid::height() const
     float base_1 = getPoint(1).distance(getPoint(2));
     float base_2 = getPoint(0).distance(getPoint(3));
 
-    printf("%d/(%d + %d)\n", area(), base_1, base_2);
-
-    return area()/(base_1 + base_2);
+    return 2*area()/(base_1 + base_2);
 }
 
 

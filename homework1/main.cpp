@@ -1,4 +1,3 @@
-
 #include "geometry.h"
 #include <iostream>
 #include <cassert>
@@ -33,11 +32,7 @@ void PolygonsCheck() {
     assert(cpc.getN() == 3 && cpc.getPoint(1).getX() == 3 && cpc.getPoint(1).getY() == 4);
     assert(cpc.perimeter() == 12);
     InheritancePolygonalChainCheck(&pc, &cpc);
-
     assert(p.area() == 6);
-
-    printf("p.area %f\n", p.area());
-
     assert(abs(tr.height() - 4) < EPS);
     assert(t.hasRightAngle());
     Triangle trSharpestAsMyHand(3, new Point[3]{Point(0, 0), Point(1, 1), Point(0, 100)});
@@ -54,5 +49,6 @@ void PolygonsCheck() {
 }
 
 int main() {
+    PointCheck();
     PolygonsCheck();
 }
