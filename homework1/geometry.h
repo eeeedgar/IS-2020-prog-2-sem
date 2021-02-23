@@ -12,15 +12,20 @@ private:
 
 public:
     // default-converting constructor
-    Point(int x = 0, int y = 0);
+    Point(int x = 0, int y = 0)
+        : x_ (x)
+        , y_ (y)
+    {
+    }
 
     // copy constructor
-    Point(const Point& other);
-
-    void destruct()
+    Point(const Point& other)
+        : x_(other.x_)
+        , y_(other.y_)
     {
-        delete this;
     }
+
+    Point& operator=(const Point &other);
 
     float getX() const;
     float getY() const;
@@ -28,7 +33,7 @@ public:
     void setY(float y);
     bool equals(const Point& other) const;
     float distance(const Point& other) const;
-
+    bool operator==(const Point& other) const;
 };
 
 class PolygonalChain
@@ -43,6 +48,7 @@ public:
     // copy constructor
     PolygonalChain(const PolygonalChain& other);
 
+    PolygonalChain& operator=(const PolygonalChain& other);
 
     unsigned int getN() const;
     Point getPoint(unsigned int n) const;
@@ -55,6 +61,7 @@ class ClosedPolygonalChain : public PolygonalChain
 public:
     ClosedPolygonalChain(unsigned int n = 0, Point *p = {});
     ClosedPolygonalChain(const ClosedPolygonalChain& other);
+    ClosedPolygonalChain& operator=(const ClosedPolygonalChain& other);
     float perimeter() const;
 };
 
@@ -63,6 +70,7 @@ class Polygon : public ClosedPolygonalChain
 public:
     Polygon(unsigned n = 0, Point *p = {});
     Polygon(const Polygon& other);
+    Polygon& operator=(const Polygon& other);
     float area() const;
 };
 
@@ -71,6 +79,7 @@ class Triangle : public Polygon
 public:
     Triangle(unsigned int n = 0, Point *p = {});
     Triangle(const Triangle& other);
+    Triangle& operator=(const Triangle& other);
     bool isRegular() const;
     bool hasRightAngle() const;
 };
@@ -80,6 +89,7 @@ class Trapezoid : public Polygon
 public:
     Trapezoid(unsigned int n = 0, Point *p = {});
     Trapezoid(const Trapezoid& other);
+    Trapezoid& operator=(const Trapezoid& other);
     float height() const;
 };
 
@@ -88,6 +98,7 @@ class RegularPolygon : public Polygon
 public:
     RegularPolygon(unsigned int n = 0, Point* p = {});
     RegularPolygon(const RegularPolygon& other);
+    RegularPolygon& operator=(const RegularPolygon& other);
 };
 
 

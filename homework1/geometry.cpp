@@ -11,16 +11,15 @@ bool equalsf(float a, float b)
 }
 
 
-Point::Point(int x, int y)
-{
-    x_ = x;
-    y_ = y;
+Point& Point::operator=(const Point &other) {
+    x_ = other.x_;
+    y_ = other.y_;
+    return *this;
 }
 
-Point::Point(const Point &other)
+bool Point::operator==(const Point &other) const
 {
-    setX(other.getX());
-    setY(other.getY());
+    return (x_ == other.x_ && y_ == other.y_);
 }
 
 float Point::getX() const
@@ -58,7 +57,8 @@ float Point::distance(const Point &other) const
 PolygonalChain::PolygonalChain(unsigned int n, Point *p)
 {
     points_number_ = n;
-    for (int i = 0; i < n; i++)
+    points_.clear();
+    for (unsigned int i = 0; i < n; i++)
     {
         points_.push_back(p[i]);
     }
@@ -67,10 +67,22 @@ PolygonalChain::PolygonalChain(unsigned int n, Point *p)
 PolygonalChain::PolygonalChain(const PolygonalChain& other)
 {
     points_number_ = other.getN();
-    for (int i = 0; i < getN(); i++)
+    points_.clear();
+    for (unsigned int i = 0; i < getN(); i++)
     {
         points_.push_back(other.getPoint(i));
     }
+}
+
+PolygonalChain& PolygonalChain::operator=(const PolygonalChain &other)
+{
+    points_number_ = other.points_number_;
+    points_.clear();
+    for (unsigned int i = 0; i < points_number_; i++)
+    {
+        points_.push_back(other.getPoint(i));
+    }
+    return *this;
 }
 
 unsigned int PolygonalChain::getN() const
@@ -87,7 +99,7 @@ bool PolygonalChain::equals(const PolygonalChain &other) const
 {
     if (getN() == other.getN())
     {
-        for (int i = 0; i < getN(); i++)
+        for (unsigned int i = 0; i < getN(); i++)
         {
             if (!getPoint(i).equals(other.getPoint(i)))
                 return false;
@@ -100,7 +112,7 @@ bool PolygonalChain::equals(const PolygonalChain &other) const
 float PolygonalChain::perimeter() const
 {
     float perimeter = 0;
-    for (int i = 0; i < getN() - 1; i++)
+    for (unsigned int i = 0; i < getN() - 1; i++)
     {
         perimeter += getPoint(i).distance(getPoint(i + 1));
     }
@@ -119,12 +131,22 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& other) : 
 float ClosedPolygonalChain::perimeter() const
 {
     float perimeter = 0;
-    for (int i = 0; i < getN() - 1; i++)
+    for (unsigned int i = 0; i < getN() - 1; i++)
     {
         perimeter += getPoint(i).distance(getPoint(i + 1));
     }
     perimeter += getPoint(getN() - 1).distance(getPoint(0));
     return perimeter;
+}
+
+ClosedPolygonalChain & ClosedPolygonalChain::operator=(const ClosedPolygonalChain& other)
+{
+    points_number_ = other.points_number_;
+    for (unsigned int i = 0; i < points_number_; i++)
+    {
+        points_.push_back(other.getPoint(i));
+    }
+    return *this;
 }
 
 
@@ -139,11 +161,22 @@ Polygon::Polygon(const Polygon& other) : ClosedPolygonalChain(other)
 
 }
 
+Polygon & Polygon::operator=(const Polygon &other)
+{
+    points_number_ = other.points_number_;
+    points_.clear();
+    for (unsigned int i = 0; i < points_number_; i++)
+    {
+        points_.push_back(other.getPoint(i));
+    }
+    return *this;
+}
+
 float Polygon::area() const
 {
     float area = 0;
 
-    for (int i = 0; i < getN() - 1; i++)
+    for (unsigned int i = 0; i < getN() - 1; i++)
     {
         area += (getPoint(i).getX() * getPoint(i + 1).getY() - getPoint(i + 1).getX() *
                                                                   getPoint(i).getY());
@@ -162,6 +195,17 @@ Triangle::Triangle(unsigned int n, Point *p) : Polygon(n, p)
 
 Triangle::Triangle(const Triangle& other) : Polygon(other)
 {}
+
+Triangle & Triangle::operator=(const Triangle &other)
+{
+    points_number_ = 3;
+    points_.clear();
+    for (unsigned int i = 0; i < points_number_; i++)
+    {
+        points_.push_back(other.getPoint(i));
+    }
+    return *this;
+}
 
 bool Triangle::isRegular() const
 {
@@ -237,9 +281,31 @@ float Trapezoid::height() const
     return 2*area()/(base_1 + base_2);
 }
 
+Trapezoid & Trapezoid::operator=(const Trapezoid &other)
+{
+    points_number_ = 4;
+    points_.clear();
+    for (unsigned int i = 0; i < points_number_; i++)
+    {
+        points_.push_back(other.getPoint(i));
+    }
+    return *this;
+}
+
 
 
 RegularPolygon::RegularPolygon(unsigned int n, Point *p) : Polygon(n, p)
 {}
 
 RegularPolygon::RegularPolygon(const RegularPolygon &other) : Polygon(other) {}
+
+RegularPolygon & RegularPolygon::operator=(const RegularPolygon &other)
+{
+    points_number_ = other.getN();
+    points_.clear();
+    for (unsigned int i = 0; i < points_number_; i++)
+    {
+        points_.push_back(other.getPoint(i));
+    }
+    return *this;
+}
