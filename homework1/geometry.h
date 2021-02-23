@@ -28,7 +28,6 @@ public:
     void setY(float y);
     bool equals(const Point& other) const;
     float distance(const Point& other) const;
-
 };
 
 class PolygonalChain
