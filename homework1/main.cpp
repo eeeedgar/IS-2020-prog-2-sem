@@ -50,6 +50,10 @@ void PolygonsCheck() {
 }
 
 int main() {
+
     PointCheck();
+
     PolygonsCheck();
+    printf("0");
+    return 0;
 }
