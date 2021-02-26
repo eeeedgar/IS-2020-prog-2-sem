@@ -3,8 +3,6 @@
 
 #include <vector>
 
-bool equalsf(float a, float b);
-
 class Point
 {
 private:
