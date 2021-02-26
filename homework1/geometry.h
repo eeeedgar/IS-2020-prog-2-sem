@@ -27,7 +27,6 @@ public:
 
     Point& operator=(const Point &other);
 
-
     float getX() const;
     float getY() const;
     void setX(float x);

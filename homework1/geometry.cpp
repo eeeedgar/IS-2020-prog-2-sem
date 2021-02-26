@@ -1,14 +1,5 @@
 #include "geometry.h"
 #include <math.h>
-#include <iostream>
-
-bool equalsf(float a, float b)
-{
-    float eps = 0.000001;
-    if (a - b < eps)
-        return true;
-    return false;
-}
 
 
 Point& Point::operator=(const Point &other) {
