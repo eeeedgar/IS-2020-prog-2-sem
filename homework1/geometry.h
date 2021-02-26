@@ -48,7 +48,7 @@ public:
 
     PolygonalChain& operator=(const PolygonalChain& other);
 
-    virtual ~PolygonalChain()
+    ~PolygonalChain()
     {
         points_.clear();
     }
@@ -66,10 +66,7 @@ public:
     ClosedPolygonalChain(const ClosedPolygonalChain& other);
     ClosedPolygonalChain& operator=(const ClosedPolygonalChain& other);
     float perimeter() const;
-    virtual ~ClosedPolygonalChain()
-    {
-        points_.clear();
-    }
+
 };
 
 class Polygon : public ClosedPolygonalChain
@@ -79,10 +76,7 @@ public:
     Polygon(const Polygon& other);
     Polygon& operator=(const Polygon& other);
     float area() const;
-    virtual ~Polygon()
-    {
-        points_.clear();
-    }
+
 };
 
 class Triangle : public Polygon
@@ -93,9 +87,7 @@ public:
     Triangle& operator=(const Triangle& other);
     bool isRegular() const;
     bool hasRightAngle() const;
-    virtual ~Triangle(){
-        points_.clear();
-    }
+
 };
 
 class Trapezoid : public Polygon
@@ -105,10 +97,7 @@ public:
     Trapezoid(const Trapezoid& other);
     Trapezoid& operator=(const Trapezoid& other);
     float height() const;
-    virtual ~Trapezoid()
-    {
-        points_.clear();
-    }
+
 };
 
 class RegularPolygon : public Polygon
@@ -117,10 +106,7 @@ public:
     RegularPolygon(unsigned int n = 0, Point* p = {});
     RegularPolygon(const RegularPolygon& other);
     RegularPolygon& operator=(const RegularPolygon& other);
-    virtual ~RegularPolygon()
-    {
-        points_.clear();
-    }
+
 };
 
 
