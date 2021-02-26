@@ -48,6 +48,7 @@ public:
 
     PolygonalChain& operator=(const PolygonalChain& other);
 
+    //we need default
     virtual ~PolygonalChain()
     {
         points_.clear();
@@ -101,6 +102,7 @@ public:
 class Trapezoid : public Polygon
 {
 public:
+	//using Polygon::Polygon
     Trapezoid(unsigned int n = 0, Point *p = {});
     Trapezoid(const Trapezoid& other);
     Trapezoid& operator=(const Trapezoid& other);

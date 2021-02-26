@@ -33,6 +33,8 @@ void Point::setY(float y)
     y_ = y;
 }
 
+//u dont need it
+
 bool Point::equals(const Point &other) const
 {
     return (getX() == other.getX() && getY() == other.getY());
@@ -59,6 +61,7 @@ PolygonalChain::PolygonalChain(const PolygonalChain& other)
 {
     points_number_ = other.getN();
     points_.clear();
+    //vector has copy constructor
     for (unsigned int i = 0; i < getN(); i++)
     {
         points_.push_back(other.getPoint(i));
@@ -67,6 +70,7 @@ PolygonalChain::PolygonalChain(const PolygonalChain& other)
 
 PolygonalChain& PolygonalChain::operator=(const PolygonalChain &other)
 {
+    //vector has =
     points_number_ = other.points_number_;
     points_.clear();
     for (unsigned int i = 0; i < points_number_; i++)
@@ -86,6 +90,8 @@ Point PolygonalChain::getPoint(unsigned int n) const
     return points_.at(n);
 }
 
+//==???
+//its not java
 bool PolygonalChain::equals(const PolygonalChain &other) const
 {
     if (getN() == other.getN())
@@ -121,6 +127,7 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& other) : 
 
 float ClosedPolygonalChain::perimeter() const
 {
+	//copy-paste
     float perimeter = 0;
     for (unsigned int i = 0; i < getN() - 1; i++)
     {
@@ -132,6 +139,7 @@ float ClosedPolygonalChain::perimeter() const
 
 ClosedPolygonalChain & ClosedPolygonalChain::operator=(const ClosedPolygonalChain& other)
 {
+	//inherit it
     points_number_ = other.points_number_;
     for (unsigned int i = 0; i < points_number_; i++)
     {
@@ -200,6 +208,8 @@ Triangle & Triangle::operator=(const Triangle &other)
 
 bool Triangle::isRegular() const
 {
+	//definetelty not here
+	//eps const static private
     float eps = 0.000001;
     float a, b, c;
     a = getPoint(0).distance(getPoint(1));
@@ -252,7 +262,7 @@ bool Triangle::hasRightAngle() const
         }
     }
 
-
+	//in dist u have sqrt, and here u pow it at 2
     if (abs(hyp - sqrtf( pow(leg_1, 2) + pow(leg_2, 2) ) ) < eps)
         return true;
     return false;
@@ -284,7 +294,7 @@ Trapezoid & Trapezoid::operator=(const Trapezoid &other)
 }
 
 
-
+//area and perimeter faster
 RegularPolygon::RegularPolygon(unsigned int n, Point *p) : Polygon(n, p)
 {}
 
