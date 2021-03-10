@@ -2,6 +2,7 @@
 #define HOMEWORK1_GEOMETRY_H
 
 #include <vector>
+#include <math.h>
 
 class Point
 {
@@ -13,23 +14,20 @@ public:
     Point(int x = 0, int y = 0)
         : x_ (x)
         , y_ (y)
-    {
-    }
+    {}
 
     // copy constructor
     Point(const Point& other)
         : x_(other.x_)
         , y_(other.y_)
-    {
-    }
+    {}
 
     Point& operator=(const Point &other);
 
     float getX() const;
     float getY() const;
-    void setX(float x);
-    void setY(float y);
-    bool equals(const Point& other) const;
+    void setX(int x);
+    void setY(int y);
     float distance(const Point& other) const;
     bool operator==(const Point& other) const;
 };
@@ -48,81 +46,56 @@ public:
 
     PolygonalChain& operator=(const PolygonalChain& other);
 
+    bool operator==(const PolygonalChain& other) const;
+
     //we need default
-    virtual ~PolygonalChain()
-    {
-        points_.clear();
-    }
+    virtual ~PolygonalChain() = default;
 
     unsigned int getN() const;
     Point getPoint(unsigned int n) const;
-    bool equals(const PolygonalChain& other) const;
     virtual float perimeter() const;
 };
 
 class ClosedPolygonalChain : public PolygonalChain
 {
 public:
-    ClosedPolygonalChain(unsigned int n = 0, Point *p = {});
-    ClosedPolygonalChain(const ClosedPolygonalChain& other);
-    ClosedPolygonalChain& operator=(const ClosedPolygonalChain& other);
-    float perimeter() const;
-    virtual ~ClosedPolygonalChain()
-    {
-        points_.clear();
-    }
+    using PolygonalChain::PolygonalChain;
+
+    virtual float perimeter() const;
 };
 
 class Polygon : public ClosedPolygonalChain
 {
 public:
-    Polygon(unsigned n = 0, Point *p = {});
-    Polygon(const Polygon& other);
-    Polygon& operator=(const Polygon& other);
-    float area() const;
-    virtual ~Polygon()
-    {
-        points_.clear();
-    }
+    using ClosedPolygonalChain::ClosedPolygonalChain;
+
+    virtual float area() const;
 };
 
 class Triangle : public Polygon
 {
 public:
-    Triangle(unsigned int n = 0, Point *p = {});
-    Triangle(const Triangle& other);
-    Triangle& operator=(const Triangle& other);
-    bool isRegular() const;
+    using Polygon::Polygon;
+
+    //bool isRegular() const;
     bool hasRightAngle() const;
-    virtual ~Triangle(){
-        points_.clear();
-    }
 };
 
 class Trapezoid : public Polygon
 {
 public:
 	//using Polygon::Polygon
-    Trapezoid(unsigned int n = 0, Point *p = {});
-    Trapezoid(const Trapezoid& other);
-    Trapezoid& operator=(const Trapezoid& other);
+    using Polygon::Polygon;
+
     float height() const;
-    virtual ~Trapezoid()
-    {
-        points_.clear();
-    }
 };
 
 class RegularPolygon : public Polygon
 {
 public:
-    RegularPolygon(unsigned int n = 0, Point* p = {});
-    RegularPolygon(const RegularPolygon& other);
-    RegularPolygon& operator=(const RegularPolygon& other);
-    virtual ~RegularPolygon()
-    {
-        points_.clear();
-    }
+    using Polygon::Polygon;
+    float perimeter() const;
+    float area() const;
 };
 
 
