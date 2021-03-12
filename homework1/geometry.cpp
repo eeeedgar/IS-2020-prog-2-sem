@@ -39,7 +39,12 @@ void Point::setY(int y)
 
 double Point::distance(const Point &other) const
 {
-    return (sqrt(pow(getX() - other.getX(), 2) + pow(getY() - other.getY(), 2)));
+    return (sqrt(distance2(other)));
+}
+
+int Point::distance2(const Point &other) const
+{
+    return pow(getX() - other.getX(), 2) + pow(getY() - other.getY(), 2);
 }
 
 
@@ -109,7 +114,7 @@ double ClosedPolygonalChain::perimeter() const
 
 double Polygon::area() const
 {
-    double area = 0;
+    int area = 0;
 
     for (unsigned int i = 0; i < getN() - 1; i++)
     {
@@ -118,9 +123,8 @@ double Polygon::area() const
     }
     area += (getPoint(getN() - 1).getX() * getPoint(0).getY() - getPoint(0).getX() *
                                                                 getPoint(getN() - 1).getY());
-    area = (abs(area))/2.0;
 
-    return area;
+    return (abs(area))/2.0;
 }
 
 
@@ -149,7 +153,7 @@ double Trapezoid::height() const
     double base_1 = getPoint(1).distance(getPoint(2));
     double base_2 = getPoint(0).distance(getPoint(3));
 
-    return 2*area()/(base_1 + base_2);
+    return 2 * area()/(base_1 + base_2);
 }
 
 
@@ -158,9 +162,9 @@ double RegularPolygon::area() const
 {
     if (points_.size() > 2)
     {
-        double side = getPoint(0).distance(getPoint(1));
+        int side2 = getPoint(0).distance2(getPoint(1));
 
-        return (points_.size() * side * side) / (4 * tan(M_PI/points_.size()));
+        return (points_.size() * side2) / (4 * tan(M_PI/points_.size()));
     }
     return 0;
 }

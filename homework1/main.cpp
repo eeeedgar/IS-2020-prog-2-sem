@@ -53,4 +53,6 @@ int main() {
     PolygonsCheck();
 
     cout << 0 << endl;
+
+    return 0;
 }

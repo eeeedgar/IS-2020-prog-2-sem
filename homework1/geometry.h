@@ -25,6 +25,7 @@ public:
     void setX(int x);
     void setY(int y);
     double distance(const Point& other) const;
+    int distance2(const Point& other) const;
 
     Point& operator=(const Point &other);
     bool operator==(const Point& other) const;
