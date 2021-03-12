@@ -11,13 +11,13 @@ private:
 
 public:
     Point(int x = 0, int y = 0)
-        : x_ (x)
-        , y_ (y)
+            : x_ (x)
+            , y_ (y)
     {}
 
     Point(const Point& other)
-        : x_(other.x_)
-        , y_(other.y_)
+            : x_(other.x_)
+            , y_(other.y_)
     {}
 
     int getX() const;

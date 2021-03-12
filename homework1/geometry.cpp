@@ -54,15 +54,11 @@ PolygonalChain::PolygonalChain(unsigned int n, Point *p)
 
 PolygonalChain::PolygonalChain(const PolygonalChain& other)
 {
-    points_.clear();
-    //vector has copy constructor
-
     points_ = other.points_;
 }
 
 PolygonalChain& PolygonalChain::operator=(const PolygonalChain &other)
 {
-    //vector has =
     points_ = other.points_;
 
     return *this;
@@ -118,10 +114,10 @@ double Polygon::area() const
     for (unsigned int i = 0; i < getN() - 1; i++)
     {
         area += (getPoint(i).getX() * getPoint(i + 1).getY() - getPoint(i + 1).getX() *
-                                                                  getPoint(i).getY());
+                                                               getPoint(i).getY());
     }
     area += (getPoint(getN() - 1).getX() * getPoint(0).getY() - getPoint(0).getX() *
-                                                                   getPoint(getN() - 1).getY());
+                                                                getPoint(getN() - 1).getY());
     area = (abs(area))/2.0;
 
     return area;
@@ -142,6 +138,7 @@ bool Triangle::hasRightAngle() const
 
     if (a_x * b_y + a_y * b_y == 0 || b_x * c_y + b_y * c_y == 0 || c_x * a_y + c_y * a_y == 0)
         return true;
+
     return false;
 }
 
@@ -174,6 +171,6 @@ double RegularPolygon::perimeter() const
     {
         double side = getPoint(0).distance(getPoint(1));
         return points_.size() * side;
-     }
+    }
     return 0;
 }
