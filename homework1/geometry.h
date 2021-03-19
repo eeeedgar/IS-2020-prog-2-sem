@@ -28,6 +28,7 @@ public:
     int distance2(const Point& other) const;
 
     Point& operator=(const Point &other);
+    //fixed its not java
     bool operator==(const Point& other) const;
 };
 
@@ -40,6 +41,7 @@ public:
 
     PolygonalChain(const PolygonalChain& other);
 
+    //fixed we need default
     virtual ~PolygonalChain() = default;
 
     unsigned int getN() const;
@@ -61,6 +63,7 @@ public:
 class Polygon : public ClosedPolygonalChain
 {
 public:
+    //fixed copy-paste
     using ClosedPolygonalChain::ClosedPolygonalChain;
 
     virtual double area() const;
@@ -77,6 +80,7 @@ public:
 class Trapezoid : public Polygon
 {
 public:
+    //fixed using Polygon::Polygon
     using Polygon::Polygon;
 
     double height() const;

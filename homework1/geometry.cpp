@@ -1,7 +1,7 @@
 #include "geometry.h"
 #include <math.h>
 
-
+//fixed eps const static private
 const double EPS = 1e-9;
 
 
@@ -59,6 +59,7 @@ PolygonalChain::PolygonalChain(unsigned int n, Point *p)
 
 PolygonalChain::PolygonalChain(const PolygonalChain& other)
 {
+    //fixed vector has =
     points_ = other.points_;
 }
 
@@ -139,12 +140,9 @@ bool Triangle::hasRightAngle() const
 
     int c_x = getPoint(0).getX() - getPoint(2).getX();
     int c_y = getPoint(0).getY() - getPoint(2).getY();
-	//todo return expression
-	//todo where are fixed?
-    if (a_x * b_y + a_y * b_y == 0 || b_x * c_y + b_y * c_y == 0 || c_x * a_y + c_y * a_y == 0)
-        return true;
-
-    return false;
+	//fixed return expression
+    //fixed where are fixed?
+    return (a_x * b_y + a_y * b_y == 0 || b_x * c_y + b_y * c_y == 0 || c_x * a_y + c_y * a_y == 0);
 }
 
 
@@ -158,11 +156,12 @@ double Trapezoid::height() const
 }
 
 
-
+//fixed area and perimeter faster
 double RegularPolygon::area() const
 {
     if (points_.size() > 2)
     {
+        //fixed in dist u have sqrt, and here u pow it at 2
         int side2 = getPoint(0).distance2(getPoint(1));
 
         return (points_.size() * side2) / (4 * tan(M_PI/points_.size()));
