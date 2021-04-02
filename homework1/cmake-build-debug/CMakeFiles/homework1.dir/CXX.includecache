@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+C:/repos/IS-2020-prog-2-sem/homework1/geometry.cpp
+geometry.h
+C:/repos/IS-2020-prog-2-sem/homework1/geometry.h
+math.h
+-
+
 C:/repos/IS-2020-prog-2-sem/homework1/geometry.h
 vector
 -
