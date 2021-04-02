@@ -75,7 +75,7 @@ Polynomial operator/(const Polynomial &, int);
 
 std::string power(int);
 
-std::string component(int, int, int);
+std::string toString(int, int, int);
 
 std::ostream &operator<<(std::ostream &, const Polynomial &);
 

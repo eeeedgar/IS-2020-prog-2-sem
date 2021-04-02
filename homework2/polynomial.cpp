@@ -273,7 +273,7 @@ std::string power(int pow)
     return "^" + std::to_string(pow);
 };
 
-std ::string component(int coeff, int pow, int max)
+std ::string toString(int coeff, int pow, int max)
 {
     std::string result = "";
     if (coeff != 0)
@@ -312,6 +312,6 @@ std::ostream &operator<<(std::ostream &out, const Polynomial &poly)
         return out;
     }
     for (int *i = x; i >= polynomial.factors_; i--)
-        out << component(*i, i - polynomial.factors_ + polynomial.lowestDegree_, polynomial.highestDegree_);
+        out << toString(*i, i - polynomial.factors_ + polynomial.lowestDegree_, polynomial.highestDegree_);
     return out;
 }
