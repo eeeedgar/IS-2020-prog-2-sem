@@ -46,7 +46,7 @@ Polynomial Polynomial::refactor() const
     }
     if (realMin >= realMax)
     {
-        if (factors_[realMin] == 0)
+        if (factors_[realMin - lowestDegree_] == 0)
             return Polynomial(0, 0, new int[1]{0});
     }
 
@@ -93,6 +93,7 @@ void Polynomial::operator+=(const Polynomial &other)
     highestDegree_ = maxDegree;
 }
 
+//todo copy-paste from +=
 void Polynomial::operator-=(const Polynomial &other)
 {
     int minDegree = (lowestDegree_ < other.lowestDegree_) ? lowestDegree_ : other.lowestDegree_;
@@ -139,7 +140,7 @@ void Polynomial::operator*=(int k)
 
 void Polynomial::operator/=(int k)
 {
-
+	//todo use for_each
     for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
     {
         factors_[i] /= k;
@@ -240,6 +241,7 @@ Polynomial operator*(const Polynomial &a, const Polynomial &b)
 
 bool operator==(const Polynomial &p1, const Polynomial &p2)
 {
+	//todo refactor original parameters (mb you will need const cast)
     Polynomial a(p1);
     Polynomial b(p2);
 

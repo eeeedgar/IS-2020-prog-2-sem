@@ -13,6 +13,7 @@ private:
     int* factors_;
 
 public:
+	//todo make operator=
     Polynomial();
 
     Polynomial(int, int, int []);
@@ -30,7 +31,7 @@ public:
     {
         return lowestDegree_;
     }
-
+    //todo return Polynomial&
     void operator+=(const Polynomial &);
 
     void operator-=(const Polynomial &);
