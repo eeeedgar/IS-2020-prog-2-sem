@@ -34,18 +34,6 @@ int Polynomial::getFactor(int degree) const
 
 Polynomial Polynomial::refactor() const
 {
-    /*
-    int *p = factors_ + highestDegree_ - lowestDegree_;
-    int max = highestDegree_;
-    int min = lowestDegree_;
-    for (; *p == 0 and max > min; p--)
-        max--;
-    int *B = new int[max - min + 1];
-    p = B;
-    for (int *i = factors_; i <= factors_ + max - min; i++, p++)
-        *p = *i;
-    return Polynomial(min, max, B);
-     */
     int realMin = lowestDegree_;
     int realMax = highestDegree_;
     while (factors_[realMin - lowestDegree_] == 0 && realMin < highestDegree_)
