@@ -25,6 +25,16 @@ Polynomial::Polynomial(const Polynomial &other)
     std::copy(other.factors_, other.factors_ + size, factors_);
 }
 
+Polynomial& Polynomial::operator=(const Polynomial &other)
+{
+    lowestDegree_ = other.lowestDegree_;
+    highestDegree_ = other.highestDegree_;
+    int size = highestDegree_ - lowestDegree_ + 1;
+    factors_ = new int[size];
+    std::copy(other.factors_, other.factors_ + size, factors_);
+    return *this;
+}
+
 int Polynomial::getFactor(int degree) const
 {
     if (degree < lowestDegree_ || degree > highestDegree_)
@@ -55,7 +65,7 @@ Polynomial Polynomial::refactor() const
     return Polynomial(realMin, realMax, buf);
 }
 
-void Polynomial::operator+=(const Polynomial &other)
+Polynomial& Polynomial::operator+=(const Polynomial &other)
 {
     int minDegree = (lowestDegree_ < other.lowestDegree_) ? lowestDegree_ : other.lowestDegree_;
 
@@ -91,10 +101,12 @@ void Polynomial::operator+=(const Polynomial &other)
 
     lowestDegree_ = minDegree;
     highestDegree_ = maxDegree;
+
+    return *this;
 }
 
 //todo copy-paste from +=
-void Polynomial::operator-=(const Polynomial &other)
+Polynomial& Polynomial::operator-=(const Polynomial &other)
 {
     int minDegree = (lowestDegree_ < other.lowestDegree_) ? lowestDegree_ : other.lowestDegree_;
 
@@ -130,21 +142,27 @@ void Polynomial::operator-=(const Polynomial &other)
 
     lowestDegree_ = minDegree;
     highestDegree_ = maxDegree;
+
+    return *this;
 }
 
-void Polynomial::operator*=(int k)
+Polynomial& Polynomial::operator*=(int k)
 {
     for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
+    {
         factors_[i] *= k;
+    }
+    return *this;
 }
 
-void Polynomial::operator/=(int k)
+Polynomial& Polynomial::operator/=(int k)
 {
 	//todo use for_each
     for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
     {
         factors_[i] /= k;
     }
+    return *this;
 }
 
 int Polynomial::operator[](int degree) const
@@ -268,52 +286,97 @@ Polynomial operator/(const Polynomial &p, int k)
 
 }
 
-std::string power(int pow)
+double Polynomial::get(int x) const
 {
-    if (pow == 1 or pow == 0)
-        return "";
-    return "^" + std::to_string(pow);
-};
-
-std ::string toString(int coeff, int pow, int max)
-{
-    std::string result = "";
-    if (coeff != 0)
+    int notNegativeDegreeAnswer = 0;
+    if (highestDegree_ > 0)
     {
-        if (pow == 0)
-            if (coeff > 0)
-                result = "+" + std::to_string(coeff);
-            else
-                result = std::to_string(coeff);
-        else if (coeff == -1 or coeff == 1)
+        int minNotNegativeDegree = (lowestDegree_ > 0) ? lowestDegree_: 0;
+
+        for (int i = highestDegree_; i >= minNotNegativeDegree; i--)
         {
-            if (pow != max)
-                result = "+";
-            if (coeff == -1)
-                result = "-";
-            result += "x" + power(pow);
-        }
-        else
-        {
-            if (coeff > 0 and pow != max)
-                result = "+";
-            result += std::to_string(coeff) + "x" + power(pow);
+            notNegativeDegreeAnswer *= x;
+            notNegativeDegreeAnswer += factors_[i - lowestDegree_];
         }
     }
-    return result;
+
+    double negativeDegreeAnswer = 0;
+    if (lowestDegree_ < 0)
+    {
+        int maxNegativeDegree = (highestDegree_ < 0) ? highestDegree_ : -1;
+
+        for (int i = lowestDegree_; i <= maxNegativeDegree; i++)
+        {
+            negativeDegreeAnswer += factors_[i - lowestDegree_];
+            negativeDegreeAnswer /= x;
+        }
+    }
+    return notNegativeDegreeAnswer + negativeDegreeAnswer;
 }
 
-std::ostream &operator<<(std::ostream &out, const Polynomial &poly)
+
+std::ostream &operator<<(std::ostream &out, const Polynomial &p)
 {
-    Polynomial polynomial(poly);
-    //polynomial.refactor();
-    int *x = polynomial.factors_ + polynomial.highestDegree_ - polynomial.lowestDegree_;
-    if (polynomial.highestDegree_ == polynomial.lowestDegree_)
-    {
-        out << *(polynomial.factors_) << power(polynomial.highestDegree_);
-        return out;
-    }
-    for (int *i = x; i >= polynomial.factors_; i--)
-        out << toString(*i, i - polynomial.factors_ + polynomial.lowestDegree_, polynomial.highestDegree_);
+    out << p.toString();
     return out;
+}
+
+
+
+std::string Polynomial::toString() const
+{
+    std::string result = "";
+
+    for (int i = highestDegree_; i > lowestDegree_; i--)
+    {
+        if (factors_[i - lowestDegree_] != 0)
+        {
+            switch (i) {
+                case 0:
+                    result += std::to_string(factors_[i - lowestDegree_]);
+                    break;
+                case 1:
+                    if (factors_[i - lowestDegree_] != 1)
+                    {
+                        result += std::to_string(factors_[i - lowestDegree_]);
+                    }
+                    result += "x";
+                    break;
+                default:
+                    if (factors_[i - lowestDegree_] != 1)
+                    {
+                        result += std::to_string(factors_[i - lowestDegree_]);
+                    }
+                    result += "x^" + std::to_string(i);
+                    break;
+            }
+            result += "+";
+        }
+    }
+    if (factors_[0] != 0)
+    {
+        switch (lowestDegree_)
+        {
+            case 0:
+                result += factors_[0];
+                break;
+            case 1:
+                if (factors_[0] != 1)
+                {
+                    result += std::to_string(factors_[0]);
+                }
+                result += "x";
+                break;
+            default:
+                if (factors_[0] != 1)
+                {
+                    result += std::to_string(factors_[0]);
+                }
+                result += "x^" + std::to_string(lowestDegree_);
+                break;
+        }
+    }
+    if (result.size() == 0)
+        return "0";
+    return result;
 }

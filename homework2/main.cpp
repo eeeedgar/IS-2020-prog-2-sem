@@ -6,7 +6,9 @@
 
 using namespace std;
 
-void checkOut() {
+/*
+void checkOut()
+{
     stringstream ss;
     ss << Polynomial(0, 2, new int[3]{1, 2, 3}) << " ";
     ss << Polynomial(1, 2, new int[2]{-3, 4}) << " ";
@@ -17,7 +19,8 @@ void checkOut() {
     assert(ss.str() == "3x^2+2x+1 4x^2-3x -x^2-3+x^-1 0 -3x^2+3x x^2+x^-2 ");
 }
 
-void PolynomialOperators() {
+void PolynomialOperators()
+{
     stringstream ss;
     const auto a =  Polynomial(0, 2, new int[3]{1, 2, 3}) ;
     const auto b = Polynomial(1, 2, new int[2]{-3, 4});
@@ -48,10 +51,23 @@ void PolynomialOperators() {
    	g[3] = 0;
    	assert(g == b);
 }
+*/
 
 
-int main() {
-    checkOut();
-    PolynomialOperators();
+int main(int argc, char** argv)
+{
+    //checkOut();
+    //PolynomialOperators();
+
+    int x = argv[1][0] - '0';
+    cout << "x = " << x + argc * 0 << endl;
+
+    //auto a =  Polynomial(0, 2, new int[3]{1, 2, 3});
+    auto a =  Polynomial(-1, -1, new int[1]{1});
+
+    cout << a << endl;
+
+    cout << a.get(x) << endl;
+
     return 0;
 }

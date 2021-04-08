@@ -13,7 +13,7 @@ private:
     int* factors_;
 
 public:
-	//todo make operator=
+	//fixed make operator=
     Polynomial();
 
     Polynomial(int, int, int []);
@@ -31,14 +31,17 @@ public:
     {
         return lowestDegree_;
     }
-    //todo return Polynomial&
-    void operator+=(const Polynomial &);
 
-    void operator-=(const Polynomial &);
+    Polynomial& operator=(const Polynomial &);
 
-    void operator*=(int);
+    //fixed return Polynomial&
+    Polynomial& operator+=(const Polynomial &);
 
-    void operator/=(int);
+    Polynomial& operator-=(const Polynomial &);
+
+    Polynomial& operator*=(int);
+
+    Polynomial& operator/=(int);
 
     Polynomial operator-();
 
@@ -46,7 +49,13 @@ public:
 
     int &operator[](int);
 
+    std::string toString() const;
+
+    //todo (my) repair refactor, make it Polynomial&
+    //todo (my) repair << ( (-1, -1, new int[1]{1}) - 1^-1 )
     Polynomial refactor() const;
+
+    double get(int n) const;
 
     friend Polynomial operator+(const Polynomial &, const Polynomial &);
     friend Polynomial operator-(const Polynomial &, const Polynomial &);
@@ -57,29 +66,6 @@ public:
     friend bool operator==(const Polynomial &, const Polynomial &);
     friend std::ostream &operator<<(std::ostream &, const Polynomial &);
 };
-
-
-
-bool operator==(const Polynomial &, const Polynomial &);
-
-Polynomial operator+(const Polynomial &, const Polynomial &);
-
-Polynomial operator-(const Polynomial &, const Polynomial &);
-
-Polynomial operator*(const Polynomial &, int);
-
-Polynomial operator*(int, const Polynomial &);
-
-Polynomial operator*(const Polynomial &, const Polynomial &);
-
-Polynomial operator/(const Polynomial &, int);
-
-std::string power(int);
-
-std::string toString(int, int, int);
-
-std::ostream &operator<<(std::ostream &, const Polynomial &);
-
 
 
 #endif //HOMEWORK2_POLYNOMIAL_H
