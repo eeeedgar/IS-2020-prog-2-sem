@@ -4,7 +4,7 @@ Polynomial::Polynomial()
     : lowestDegree_(0)
     , highestDegree_(0)
 {
-    factors_ = new int{0};
+    factors_ = new int[1]{0};
 }
 
 Polynomial::Polynomial(int l, int h, int a [])
@@ -14,6 +14,7 @@ Polynomial::Polynomial(int l, int h, int a [])
     int size = h - l + 1;
     factors_ = new int [size];
     std::copy(a, a + size, factors_);
+    refactor();
 }
 
 Polynomial::Polynomial(const Polynomial &other)
@@ -23,6 +24,7 @@ Polynomial::Polynomial(const Polynomial &other)
     int size = highestDegree_ - lowestDegree_ + 1;
     factors_ = new int [size];
     std::copy(other.factors_, other.factors_ + size, factors_);
+    refactor();
 }
 
 Polynomial& Polynomial::operator=(const Polynomial &other)
@@ -32,6 +34,7 @@ Polynomial& Polynomial::operator=(const Polynomial &other)
     int size = highestDegree_ - lowestDegree_ + 1;
     factors_ = new int[size];
     std::copy(other.factors_, other.factors_ + size, factors_);
+    refactor();
     return *this;
 }
 
@@ -42,28 +45,40 @@ int Polynomial::getFactor(int degree) const
     return factors_[degree - lowestDegree_];
 }
 
-Polynomial Polynomial::refactor() const
+void Polynomial::refactor() const
 {
+    Polynomial *buffer = const_cast<Polynomial*>(this);
     int realMin = lowestDegree_;
-    int realMax = highestDegree_;
-    while (factors_[realMin - lowestDegree_] == 0 && realMin < highestDegree_)
-    {
+
+    while (realMin <= highestDegree_ && factors_[realMin - lowestDegree_] == 0)
         realMin++;
-    }
-    while (factors_[realMax - lowestDegree_] == 0 && realMax > realMin)
+    if (realMin > highestDegree_)
     {
-        realMax--;
-    }
-    if (realMin >= realMax)
-    {
-        if (factors_[realMin - lowestDegree_] == 0)
-            return Polynomial(0, 0, new int[1]{0});
+        delete [] buffer->factors_;
+        buffer->factors_ = new int[1]{0};
+        buffer->lowestDegree_ = 0;
+        buffer->highestDegree_ = 0;
     }
 
-    int *buf = new int[realMax - realMin + 1];
-    std::copy(factors_ + realMin - lowestDegree_, factors_ + realMax - lowestDegree_, buf);
-    return Polynomial(realMin, realMax, buf);
+    int realMax = highestDegree_;
+
+    while (realMax >= realMin && factors_[realMax - lowestDegree_] == 0)
+        realMax--;
+
+    int* buf = new int[realMax - realMin + 1];
+
+    for (int i = realMin; i <= realMax; i++)
+        buf[i - realMin] = factors_[i - lowestDegree_];
+
+    delete [] buffer->factors_;
+    buffer->factors_ = new int[realMax - realMin + 1];
+    std::copy(buf, buf + realMax - realMin + 1, factors_);
+    delete [] buf;
+    buffer->highestDegree_ = realMax;
+    buffer->lowestDegree_ = realMin;
 }
+
+
 
 Polynomial& Polynomial::operator+=(const Polynomial &other)
 {
@@ -101,6 +116,8 @@ Polynomial& Polynomial::operator+=(const Polynomial &other)
 
     lowestDegree_ = minDegree;
     highestDegree_ = maxDegree;
+
+    refactor();
 
     return *this;
 }
@@ -143,15 +160,16 @@ Polynomial& Polynomial::operator-=(const Polynomial &other)
     lowestDegree_ = minDegree;
     highestDegree_ = maxDegree;
 
+    refactor();
+
     return *this;
 }
 
 Polynomial& Polynomial::operator*=(int k)
 {
     for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
-    {
         factors_[i] *= k;
-    }
+    refactor();
     return *this;
 }
 
@@ -159,9 +177,8 @@ Polynomial& Polynomial::operator/=(int k)
 {
 	//todo use for_each
     for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
-    {
         factors_[i] /= k;
-    }
+    refactor();
     return *this;
 }
 
@@ -207,6 +224,7 @@ Polynomial operator+(const Polynomial& a, const Polynomial& b)
 {
     Polynomial buf(a);
     buf += b;
+    buf.refactor();
     return buf;
 }
 
@@ -214,6 +232,7 @@ Polynomial operator-(const Polynomial& a, const Polynomial& b)
 {
     Polynomial buf(a);
     buf -= b;
+    buf.refactor();
     return buf;
 }
 
@@ -221,6 +240,7 @@ Polynomial operator*(const Polynomial &p, int k)
 {
     Polynomial buf(p);
     buf *= k;
+    buf.refactor();
     return buf;
 }
 
@@ -228,6 +248,7 @@ Polynomial operator*(int k, const Polynomial &p)
 {
     Polynomial buf(p);
     buf *= k;
+    buf.refactor();
     return buf;
 }
 
@@ -236,6 +257,7 @@ Polynomial Polynomial::operator-()
     Polynomial buf(lowestDegree_, highestDegree_, factors_);
     for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
         buf.factors_[i] *= -1;
+    buf.refactor();
     return buf;
 }
 
@@ -254,17 +276,18 @@ Polynomial operator*(const Polynomial &a, const Polynomial &b)
         for (int *j = b.factors_; j <= b.factors_ + b.highestDegree_ - b.lowestDegree_; j++)
             *(array + (i - a.factors_) + (j - b.factors_)) += *i * *j;
     Polynomial pol(min, max, array);
+    pol.refactor();
     return pol;
 }
 
 bool operator==(const Polynomial &p1, const Polynomial &p2)
 {
-	//todo refactor original parameters (mb you will need const cast)
+	//fixed refactor original parameters (mb you will need const cast)
     Polynomial a(p1);
     Polynomial b(p2);
 
-    //a.refactor();
-    //b.refactor();
+    a.refactor();
+    b.refactor();
 
     if (a.lowestDegree_ != b.lowestDegree_ || a.highestDegree_ != b.highestDegree_)
         return false;
@@ -281,8 +304,8 @@ Polynomial operator/(const Polynomial &p, int k)
 {
     Polynomial buf(p);
     buf/=k;
-    return buf.refactor();
-    //return buf;
+    buf.refactor();
+    return buf;
 
 }
 
@@ -322,60 +345,54 @@ std::ostream &operator<<(std::ostream &out, const Polynomial &p)
 }
 
 
+std::string Polynomial::power(int n) const
+{
+    if (n > highestDegree_ or n < lowestDegree_)
+        return "";
+    if (factors_[n - lowestDegree_] == 0)
+        return "";
+
+    std::string answer = "";
+
+    if (n != highestDegree_ and factors_[n - lowestDegree_] > 0)
+        answer += "+";
+    if (n == 0)
+    {
+        answer += std::to_string(factors_[n - lowestDegree_]);
+        return answer;
+    }
+    else
+    {
+        switch (factors_[n - lowestDegree_])
+        {
+            case 1:
+                break;
+            case -1:
+                answer += "-";
+                break;
+            default:
+                answer += std::to_string(factors_[n - lowestDegree_]);
+                break;
+        }
+        answer += "x";
+        if (n != 1)
+            answer += "^" + std::to_string(n);
+    }
+    return answer;
+}
+
 
 std::string Polynomial::toString() const
 {
+    refactor();
     std::string result = "";
 
-    for (int i = highestDegree_; i > lowestDegree_; i--)
+    for (int i = highestDegree_; i >= lowestDegree_; i--)
     {
-        if (factors_[i - lowestDegree_] != 0)
-        {
-            switch (i) {
-                case 0:
-                    result += std::to_string(factors_[i - lowestDegree_]);
-                    break;
-                case 1:
-                    if (factors_[i - lowestDegree_] != 1)
-                    {
-                        result += std::to_string(factors_[i - lowestDegree_]);
-                    }
-                    result += "x";
-                    break;
-                default:
-                    if (factors_[i - lowestDegree_] != 1)
-                    {
-                        result += std::to_string(factors_[i - lowestDegree_]);
-                    }
-                    result += "x^" + std::to_string(i);
-                    break;
-            }
-            result += "+";
-        }
+        result += power(i);
     }
-    if (factors_[0] != 0)
-    {
-        switch (lowestDegree_)
-        {
-            case 0:
-                result += factors_[0];
-                break;
-            case 1:
-                if (factors_[0] != 1)
-                {
-                    result += std::to_string(factors_[0]);
-                }
-                result += "x";
-                break;
-            default:
-                if (factors_[0] != 1)
-                {
-                    result += std::to_string(factors_[0]);
-                }
-                result += "x^" + std::to_string(lowestDegree_);
-                break;
-        }
-    }
+
+
     if (result.size() == 0)
         return "0";
     return result;

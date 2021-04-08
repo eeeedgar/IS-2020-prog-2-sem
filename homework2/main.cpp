@@ -3,10 +3,8 @@
 #include <sstream>
 #include <assert.h>
 
-
 using namespace std;
 
-/*
 void checkOut()
 {
     stringstream ss;
@@ -16,17 +14,18 @@ void checkOut()
     ss << Polynomial() << " ";
     ss << Polynomial(0, 2, new int[3]{0, 3, -3}) << " ";
     ss << Polynomial(-2, 2, new int[5]{1, 0, 0, 0, 1}) << " ";
+    cout << ss.str() << endl;
     assert(ss.str() == "3x^2+2x+1 4x^2-3x -x^2-3+x^-1 0 -3x^2+3x x^2+x^-2 ");
 }
 
 void PolynomialOperators()
 {
     stringstream ss;
-    const auto a =  Polynomial(0, 2, new int[3]{1, 2, 3}) ;
+    const auto a = Polynomial(0, 2, new int[3]{1, 2, 3});
     const auto b = Polynomial(1, 2, new int[2]{-3, 4});
     auto c = Polynomial(-1, 2, new int[4]{1, -3, 0, -1});
     const auto d = Polynomial();
-    const auto e =  Polynomial(0, 2, new int[3]{0, 3, -3});
+    const auto e = Polynomial(0, 2, new int[3]{0, 3, -3});
     const auto f = Polynomial(-2, 2, new int[5]{1, 0, 0, 0, 1});
     assert(a * b == b * a);
     assert(d * e == d);
@@ -47,27 +46,14 @@ void PolynomialOperators()
     auto h = -c;
     assert(c[5] == 3 && h[5] == -3);
     assert((-c)[5] == -3);
-   	auto g = b;
-   	g[3] = 0;
-   	assert(g == b);
+    auto g = b;
+    g[3] = 0;
+    assert(g == b);
 }
-*/
 
-
-int main(int argc, char** argv)
+int main()
 {
-    //checkOut();
-    //PolynomialOperators();
-
-    int x = argv[1][0] - '0';
-    cout << "x = " << x + argc * 0 << endl;
-
-    //auto a =  Polynomial(0, 2, new int[3]{1, 2, 3});
-    auto a =  Polynomial(-1, -1, new int[1]{1});
-
-    cout << a << endl;
-
-    cout << a.get(x) << endl;
-
+    checkOut();
+    PolynomialOperators();
     return 0;
 }

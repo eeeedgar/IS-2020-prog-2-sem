@@ -51,9 +51,12 @@ public:
 
     std::string toString() const;
 
-    //todo (my) repair refactor, make it Polynomial&
-    //todo (my) repair << ( (-1, -1, new int[1]{1}) - 1^-1 )
-    Polynomial refactor() const;
+    std::string power(int) const;
+
+    //fixed (my) repair refactor, make it Polynomial&
+    //fixed (my) repair << ( (-1, -1, new int[1]{1}) - 1^-1 )
+    //fixed (my) how to use refactor after &operator[] if toString is const and << uses const
+    void refactor() const;
 
     double get(int n) const;
 
