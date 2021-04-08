@@ -53,9 +53,6 @@ public:
 
     std::string power(int) const;
 
-    //fixed (my) repair refactor, make it Polynomial&
-    //fixed (my) repair << ( (-1, -1, new int[1]{1}) - 1^-1 )
-    //fixed (my) how to use refactor after &operator[] if toString is const and << uses const
     void refactor() const;
 
     double get(int n) const;
@@ -68,6 +65,7 @@ public:
     friend Polynomial operator/(const Polynomial &, int);
     friend bool operator==(const Polynomial &, const Polynomial &);
     friend std::ostream &operator<<(std::ostream &, const Polynomial &);
+    //todo std::istream &operator>>(std::istream &, Polynomial &);
 };
 
 
