@@ -1,4 +1,5 @@
 #include "polynomial.h"
+#include <algorithm>
 
 Polynomial::Polynomial()
     : lowestDegree_(0)
@@ -137,17 +138,15 @@ Polynomial& Polynomial::operator-=(const Polynomial &other)
 
 Polynomial& Polynomial::operator*=(int k)
 {
-    for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
-        factors_[i] *= k;
+    std::for_each(factors_, factors_ + highestDegree_ - lowestDegree_ + 1, [k] (int &v) {v *= k;});
     refactor();
     return *this;
 }
 
 Polynomial& Polynomial::operator/=(int k)
 {
-	//todo use for_each
-    for (int i = 0; i < highestDegree_ - lowestDegree_ + 1; i++)
-        factors_[i] /= k;
+	//fixed use for_each
+	std::for_each(factors_, factors_ + highestDegree_ - lowestDegree_ + 1, [k] (int &v) {v /= k;});
     refactor();
     return *this;
 }
@@ -358,9 +357,7 @@ std::string Polynomial::toString() const
     std::string result = "";
 
     for (int i = highestDegree_; i >= lowestDegree_; i--)
-    {
         result += power(i);
-    }
 
 
     if (result.size() == 0)

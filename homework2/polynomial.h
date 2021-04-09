@@ -67,7 +67,6 @@ public:
     friend Polynomial operator/(const Polynomial &, int);
     friend bool operator==(const Polynomial &, const Polynomial &);
     friend std::ostream &operator<<(std::ostream &, const Polynomial &);
-    //todo std::istream &operator>>(std::istream &, Polynomial &);
 };
 
 
