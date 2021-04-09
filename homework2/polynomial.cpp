@@ -78,9 +78,7 @@ void Polynomial::refactor() const
     buffer->lowestDegree_ = realMin;
 }
 
-
-
-Polynomial& Polynomial::operator+=(const Polynomial &other)
+Polynomial & Polynomial::plusOrMinus(const Polynomial &other, int option)
 {
     int minDegree = (lowestDegree_ < other.lowestDegree_) ? lowestDegree_ : other.lowestDegree_;
 
@@ -102,7 +100,7 @@ Polynomial& Polynomial::operator+=(const Polynomial &other)
         }
         if (i >= other.lowestDegree_ and i <= other.highestDegree_)
         {
-            *p += *k;
+            *p += *k * option;
             k++;
         }
         p++;
@@ -122,45 +120,17 @@ Polynomial& Polynomial::operator+=(const Polynomial &other)
     return *this;
 }
 
-//todo copy-paste from +=
+Polynomial& Polynomial::operator+=(const Polynomial &other)
+{
+    plusOrMinus(other, 1);
+
+    return *this;
+}
+
+//fixed copy-paste from +=
 Polynomial& Polynomial::operator-=(const Polynomial &other)
 {
-    int minDegree = (lowestDegree_ < other.lowestDegree_) ? lowestDegree_ : other.lowestDegree_;
-
-    int maxDegree = (highestDegree_ > other.highestDegree_) ? highestDegree_ : other.highestDegree_;
-
-    int *buf = new int[maxDegree - minDegree + 1];
-
-    int *p = buf;
-
-    int *j = factors_;
-    int *k = other.factors_;
-    for (int i = minDegree; i <= maxDegree; i++)
-    {
-        *p = 0;
-        if (i >= lowestDegree_ and i <= highestDegree_)
-        {
-            *p += *j;
-            j++;
-        }
-        if (i >= other.lowestDegree_ and i <= other.highestDegree_)
-        {
-            *p -= *k;
-            k++;
-        }
-        p++;
-    }
-
-    delete [] factors_;
-
-    factors_ = new int[maxDegree - minDegree + 1];
-
-    std::copy(buf, buf + maxDegree - minDegree + 1, factors_);
-
-    lowestDegree_ = minDegree;
-    highestDegree_ = maxDegree;
-
-    refactor();
+    plusOrMinus(other, -1);
 
     return *this;
 }

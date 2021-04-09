@@ -35,6 +35,8 @@ public:
     Polynomial& operator=(const Polynomial &);
 
     //fixed return Polynomial&
+    Polynomial& plusOrMinus(const Polynomial &, int);
+
     Polynomial& operator+=(const Polynomial &);
 
     Polynomial& operator-=(const Polynomial &);
