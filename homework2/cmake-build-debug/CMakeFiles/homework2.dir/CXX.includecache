@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/repos/IS-2020-prog-2-sem/homework2/main.cpp
+iostream
+-
+polynomial.h
+C:/repos/IS-2020-prog-2-sem/homework2/polynomial.h
+sstream
+-
+assert.h
+-
+
+C:/repos/IS-2020-prog-2-sem/homework2/polynomial.h
+iostream
+-
+sstream
+-
+math.h
+-
+
