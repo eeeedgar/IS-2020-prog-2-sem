@@ -20,18 +20,6 @@ public:
 
     Polynomial(const Polynomial &);
 
-    int getFactor(int) const;
-
-    int max() const
-    {
-        return highestDegree_;
-    }
-
-    int min() const
-    {
-        return lowestDegree_;
-    }
-
     Polynomial& operator=(const Polynomial &);
 
     //fixed return Polynomial&

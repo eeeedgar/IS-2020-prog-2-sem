@@ -39,13 +39,6 @@ Polynomial& Polynomial::operator=(const Polynomial &other)
     return *this;
 }
 
-int Polynomial::getFactor(int degree) const
-{
-    if (degree < lowestDegree_ || degree > highestDegree_)
-        return 0;
-    return factors_[degree - lowestDegree_];
-}
-
 void Polynomial::refactor() const
 {
     Polynomial *buffer = const_cast<Polynomial*>(this);
