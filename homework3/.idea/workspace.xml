@@ -1,9 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="homework3" targetName="homework3" />
+    </generated>
+  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f52635bb-08ef-413a-81c2-71ff7a7f71e6" name="Default Changelist" comment="stop-list-downloaded">
+      <change afterPath="$PROJECT_DIR$/pugiconfig.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pugixml.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pugixml.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-20210322T085457-structure-20190416T084545.xml" beforeDir="false" afterPath="$PROJECT_DIR$/data.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1qvnXSXw36EzEKbZS92oGm11E7D" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\repos\IS-2020-prog-2-sem\homework3" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
@@ -21,5 +82,95 @@
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f52635bb-08ef-413a-81c2-71ff7a7f71e6" name="Default Changelist" comment="" />
+      <created>1617968972693</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617968972693</updated>
+      <workItem from="1617968976031" duration="904000" />
+      <workItem from="1619090878444" duration="12946000" />
+      <workItem from="1619165040742" duration="12029000" />
+    </task>
+    <task id="LOCAL-00001" summary="init-commit">
+      <created>1617969012530</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1617969012530</updated>
+    </task>
+    <task id="LOCAL-00002" summary="init-commit">
+      <created>1617969059241</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1617969059241</updated>
+    </task>
+    <task id="LOCAL-00003" summary="stop-list-downloaded">
+      <created>1617969215564</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1617969215564</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init-commit" />
+    <MESSAGE value="stop-list-downloaded" />
+    <option name="LAST_COMMIT_MESSAGE" value="stop-list-downloaded" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="262" key="FileChooserDialogImpl" timestamp="1617971042349">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="262" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1617971042349" />
+    <state width="914" height="314" key="GridCell.Tab.0.bottom" timestamp="1619178057520">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="314" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
+    <state width="914" height="314" key="GridCell.Tab.0.center" timestamp="1619178057520">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="314" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
+    <state width="914" height="314" key="GridCell.Tab.0.left" timestamp="1619178057520">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="314" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
+    <state width="914" height="314" key="GridCell.Tab.0.right" timestamp="1619178057520">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="914" height="314" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
+    <state x="1032" y="253" key="Vcs.Push.Dialog.v2" timestamp="1617969217323">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1032" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1617969217323" />
+    <state x="956" y="0" width="649" height="687" key="dock-window-1" timestamp="1619174941111">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="956" y="0" width="649" height="687" key="dock-window-1/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619174941111" />
+    <state x="143" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1619177316679">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="143" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619177316679" />
   </component>
 </project>
