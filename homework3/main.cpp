@@ -7,128 +7,24 @@
 #include <string>
 #include "pugixml.hpp"
 
+#include "transport.h"
 
-std::vector<std::string> split(const std::string& str, const std::vector<std::string>& delim)
-{
-	std::vector<std::string> tokens;
-	size_t prev = 0, pos = 0;
-	do
-	{
-		pos = str.find(delim[0], prev);
-		for (int i = 1; i < delim.size(); i++)
-		{
-			size_t pos1 = str.find(delim[i], prev);
-			if (pos1 < pos)
-				pos = pos1;
-
-		}
-		if (pos == std::string::npos) pos = str.length();
-		std::string token = str.substr(prev, pos-prev);
-		token.erase(remove(token.begin(), token.end(), ' '), token.end());
-		if (!token.empty()) tokens.push_back(token);
-		prev = pos + 1;
-	}
-	while (pos < str.length() && prev < str.length());
-	return tokens;
-}
-
-
-class Transport_station
-{
- private:
-	int number_;
-	std::string type_of_vehicle_;
-	std::string name_stopping_;
-	std::string object_type_;
-	std::string the_official_name_;
-	//std::string location_;
-	std::vector<std::string> location_;
-	//std::string sroutes_;
-	std::vector<std::string> routes_;
-	//std::string coordinates_;
-	double latitude_, longitude_;
- public:
-	Transport_station(
-		int number = 0,
-		std::string type_of_vehicle = "type_of_vehicle",
-		std::string object_type = "object_type",
-		std::string name_stopping = "name_stopping",
-		std::string the_official_name = "the_official_name",
-		std::string location = "location",
-		std::string routes = "routes",
-		std::string coordinates = "coordinates")
-		: number_(number)
-		, type_of_vehicle_(type_of_vehicle)
-		, object_type_(object_type)
-		, name_stopping_(name_stopping)
-		, the_official_name_(the_official_name)
-	{
-		std::vector<std::string> sym1 = {","};
-		std::vector<std::string> l = split(location, sym1);
-		for (int i = 0; i < l.size(); i++)
-		{
-			location_.push_back((l[i]));
-		}
-		std::vector<std::string> sym2 = {".", ","};
-		std::vector<std::string> r = split(routes, sym2);
-		for (int i = 0; i < r.size(); i++)
-		{
-			routes_.push_back(r[i]);
-		}
-		std::vector<std::string> c = split(coordinates, sym1);
-		latitude_ = std::stod(c[0]);
-		longitude_ = std::stod(c[1]);
-	}
-
-	int number() const
-	{
-		return number_;
-	}
-
-	std::vector<std::string> locations() const
-	{
-		return location_;
-	}
-
-	std::string info() const
-	{
-		std::string sroutes;
-		for (int i = 0; i < routes_.size(); i++)
-		{
-			sroutes += routes_[i] + " ";
-		}
-		std::string slocation;
-		for (int i = 0; i < location_.size(); i++)
-		{
-			slocation += location_[i];
-		}
-
-		return
-			std::to_string(number_) + " " +
-			type_of_vehicle_ + " " +
-			name_stopping_ + " " +
-			object_type_ + " " +
-			the_official_name_ + " " +
-			slocation + " " +
-			sroutes + " " +
-			std::to_string(latitude_) + "," + std::to_string(longitude_);
-	}
-};
-
+using namespace std;
 
 int main()
 {
-
 	system("chcp 65001");
 	pugi::xml_document doc;
 	// pugi::xml_parse_result result =
 	doc.load_file("C:\\repos\\IS-2020-prog-2-sem\\homework3\\data.xml");
 	pugi::xml_node nd = doc.child("dataset");
 
-	std::vector<Transport_station> stations;
-	std::set<std::string> transport_types;
-	std::map<std::string, std::map< std::string, std::vector<int> > > routes;
-	std::map<std::string, std::set<int> > streets;
+	std::vector<Transport_station> stations; // просто список станций
+	std::set<std::string> transport_types; // словарь названий транспорта
+	//std::map<std::string, std::map< std::string, std::vector<int> > > routes; // словарь
+	std::map<std::string, std::set<int> > streets; // словарь : название улицы - словарь номеров станций
+
+	map<string, map<string, vector<int> > > routes; // вид транспорта - маршрут - вектор номеров остановок
 
 	for (pugi::xml_node_iterator it = nd.begin(); it != nd.end(); ++it)
 	{
@@ -144,24 +40,74 @@ int main()
 			));
 		transport_types.insert(it->child_value("type_of_vehicle"));
 		auto ts = &stations.back();
-		for (int i = 0; i < ts->locations().size(); i++)
+		for (size_t i = 0; i < ts->locations().size(); i++)
 		{
 			streets[ts->locations()[i]].insert(ts->number());
 		}
+		for (int i = 0; i < stations[stations.size() - 1].routes().size(); i++)
+		{
+			routes[it->child_value("type_of_vehicle")][stations[stations.size() - 1].routes()[i]].push_back(stations[stations.size() - 1].number());
+		}
 	}
 
-	std::map<std::string, std::set<int> >::iterator max_stations_street = streets.begin();
-	for(std::map<std::string, std::set<int> >::iterator it = streets.begin(); it != streets.end(); it++)
+	map<string, map<string, vector<int>>>::iterator max_station_transport_route = routes.begin();
+	cout << endl;
+	for (auto& transport : transport_types)
 	{
-		if (it->second.size() > max_stations_street->second.size())
-			max_stations_street = it;
+		int max_len = 0;
+		string num_max_route = "";
+		for (auto& [route, vec] : routes[transport])
+		{
+			if (vec.size() > max_len)
+			{
+				max_len = vec.size();
+				num_max_route = route;
+			}
+		}
+		cout << transport  << ": номер маршрута с наибольшим количеством остановок: " << num_max_route << ", количество остановок: " << max_len << "." << endl;
 	}
-	std::cout << "Улица с наибольшим числом остановок: " << max_stations_street->first << " - " << max_stations_street->second.size() << " остановок" << std::endl;
+	cout << endl;
 
+	for (auto& transport : transport_types)
+	{
+		int max_len = 0;
+		string num_max_route = "";
+		for (auto& [route, vec] : routes[transport])
+		{
+			double len = 0;
+			for (size_t i = 0; i < vec.size() - 1; i++)
+			{
+				double w1 = stations[vec[i]].latitude();
+				double w2 = stations[vec[i + 1]].latitude();
+				double l1 = stations[vec[i]].longitude();
+				double l2 = stations[vec[i + 1]].longitude();
+
+				len += sqrt(pow(l1 - l2, 2) + pow(w1 - w2, 2));
+
+			}
+			if (len > max_len)
+			{
+				max_len = len;
+				num_max_route = route;
+			}
+		}
+		cout << transport  << ": номер маршрута с наибольшей длиной: " << num_max_route << "." << endl;
+	}
+
+	string max_stations_street = "";
+	int max_stations_on_street = 0;
+	for (auto& [street, stats] : streets)
+	{
+		if (stats.size() > max_stations_on_street)
+		{
+			max_stations_on_street = stats.size();
+			max_stations_street = street;
+		}
+	}
+	std::cout << "\nУлица с наибольшим числом остановок: " << max_stations_street << " - " << max_stations_on_street << " остановок" << "." << std::endl;
 
 	std::cout << stations.size() << std::endl;
 	std::cout << streets.size() << std::endl;
-
 
 	return 0;
 }

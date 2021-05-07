@@ -25,16 +25,15 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_DIR="cmake-build-debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f52635bb-08ef-413a-81c2-71ff7a7f71e6" name="Default Changelist" comment="stop-list-downloaded">
-      <change afterPath="$PROJECT_DIR$/pugiconfig.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pugixml.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pugixml.hpp" afterDir="false" />
+    <list default="true" id="f52635bb-08ef-413a-81c2-71ff7a7f71e6" name="Default Changelist" comment="3-task-completed">
+      <change afterPath="$PROJECT_DIR$/transport.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transport.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../homework4/predicate.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data-20210322T085457-structure-20190416T084545.xml" beforeDir="false" afterPath="$PROJECT_DIR$/data.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +59,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -67,6 +67,11 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -75,11 +80,6 @@
     <configuration name="homework3" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="homework3" TARGET_NAME="homework3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="homework3" RUN_TARGET_NAME="homework3">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -93,7 +93,14 @@
       <updated>1617968972693</updated>
       <workItem from="1617968976031" duration="904000" />
       <workItem from="1619090878444" duration="12946000" />
-      <workItem from="1619165040742" duration="12029000" />
+      <workItem from="1619165040742" duration="16621000" />
+      <workItem from="1619290042462" duration="12000" />
+      <workItem from="1619290069398" duration="50000" />
+      <workItem from="1619518541524" duration="1851000" />
+      <workItem from="1619779947080" duration="5731000" />
+      <workItem from="1620304370870" duration="957000" />
+      <workItem from="1620309200938" duration="17000" />
+      <workItem from="1620383138208" duration="3963000" />
     </task>
     <task id="LOCAL-00001" summary="init-commit">
       <created>1617969012530</created>
@@ -116,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617969215564</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="3-task-completed">
+      <created>1619178211632</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1619178211632</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,37 +151,49 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init-commit" />
     <MESSAGE value="stop-list-downloaded" />
-    <option name="LAST_COMMIT_MESSAGE" value="stop-list-downloaded" />
+    <MESSAGE value="3-task-completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="3-task-completed" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="262" key="FileChooserDialogImpl" timestamp="1617971042349">
+    <state x="1054" y="275" key="FileChooserDialogImpl" timestamp="1620309212274">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="262" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1617971042349" />
-    <state width="914" height="314" key="GridCell.Tab.0.bottom" timestamp="1619178057520">
+    <state x="703" y="164" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1619290108462" />
+    <state x="1054" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1620309212274" />
+    <state width="916" height="2" key="GridCell.Tab.0.bottom" timestamp="1620387104149">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="314" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
-    <state width="914" height="314" key="GridCell.Tab.0.center" timestamp="1619178057520">
+    <state width="2515" height="37" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1280.680@-1920.0.1280.680" timestamp="1619702696348" />
+    <state width="916" height="2" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1620387104149" />
+    <state width="916" height="2" key="GridCell.Tab.0.center" timestamp="1620387104148">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="314" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
-    <state width="914" height="314" key="GridCell.Tab.0.left" timestamp="1619178057520">
+    <state width="2515" height="37" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1280.680@-1920.0.1280.680" timestamp="1619702696348" />
+    <state width="916" height="2" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1620387104148" />
+    <state width="916" height="2" key="GridCell.Tab.0.left" timestamp="1620387104148">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="314" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
-    <state width="914" height="314" key="GridCell.Tab.0.right" timestamp="1619178057520">
+    <state width="2515" height="37" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1280.680@-1920.0.1280.680" timestamp="1619702696348" />
+    <state width="916" height="2" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1620387104148" />
+    <state width="916" height="2" key="GridCell.Tab.0.right" timestamp="1620387104148">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="314" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178057520" />
-    <state x="1032" y="253" key="Vcs.Push.Dialog.v2" timestamp="1617969217323">
+    <state width="2515" height="37" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1280.680@-1920.0.1280.680" timestamp="1619702696348" />
+    <state width="916" height="2" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1620387104148" />
+    <state x="0" y="165" key="SettingsEditor" timestamp="1619187177226">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1032" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1617969217323" />
-    <state x="956" y="0" width="649" height="687" key="dock-window-1" timestamp="1619174941111">
+    <state x="0" y="165" key="SettingsEditor/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619187177226" />
+    <state x="1032" y="253" key="Vcs.Push.Dialog.v2" timestamp="1619178225987">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="956" y="0" width="649" height="687" key="dock-window-1/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619174941111" />
+    <state x="1032" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1619178225987" />
+    <state x="952" y="-8" width="976" height="1056" key="dock-window-1" timestamp="1620383480614">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="635" y="0" width="650" height="685" key="dock-window-1/0.0.1280.680@0.0.1280.680" timestamp="1619290119543" />
+    <state x="953" y="0" width="974" height="1047" key="dock-window-1/0.0.1920.1040/-1920.0.1280.680@-1920.0.1280.680" timestamp="1619890241299" />
+    <state x="952" y="-8" width="976" height="1056" key="dock-window-1/0.0.1920.1040/-1920.0.1280.680@0.0.1920.1040" timestamp="1620383480614" />
     <state x="143" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1619177316679">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
