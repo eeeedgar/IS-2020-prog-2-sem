@@ -16,7 +16,7 @@ int main()
 	system("chcp 65001");
 	pugi::xml_document doc;
 	// pugi::xml_parse_result result =
-	doc.load_file("C:\\repos\\IS-2020-prog-2-sem\\homework3\\data.xml");
+	doc.load_file("data.xml");
 	pugi::xml_node nd = doc.child("dataset");
 
 	std::vector<Transport_station> stations; // просто список станций
