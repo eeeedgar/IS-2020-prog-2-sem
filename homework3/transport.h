@@ -39,13 +39,5 @@ class Transport_station
 	double longitude() const;
 	std::string info() const;
 };
-/*
-class Route
-{
- private:
-	std::vector<Transport_station> stations;
-	std::map
-};
- */
 
 #endif //_TRANSPORT_H_
