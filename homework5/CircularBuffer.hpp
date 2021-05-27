@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+
 
 template <class T>
 class CircularBuffer
@@ -50,6 +50,8 @@ class CircularBuffer
 		else
 		{
 			first_ = index(first_ - 1);
+			if (first_ == last_)
+				last_ = index(last_ - 1);
 			data_[first_] = t;
 			increaseItemAmount();
 		}
@@ -67,6 +69,8 @@ class CircularBuffer
 		else
 		{
 			last_ = index(last_ + 1);
+			if (last_ == first_)
+				first_ = index(first_ + 1);
 			data_[last_] = t;
 			increaseItemAmount();
 		}
@@ -136,5 +140,32 @@ class CircularBuffer
 		for (int i = 0; i < capacity_; i++)
 			std::cout << data_[i] << " ";
 		std::cout << std::endl;
+	}
+
+	T operator[](int i) const
+	{
+		if (i < itemsAmount_ and i >= 0)
+			return data_[index(first_ + i)];
+		else
+		{
+			std::string error = "Element ";
+			error += std::to_string(i);
+			error += " doesn't exist";
+			throw std::range_error(error);
+		}
+	}
+
+	T &operator[](int i)
+	{
+		if (i < itemsAmount_ and i >= 0)
+			return data_[index(first_ + i)];
+		else
+		{
+			std::string error = "Out of Range. Index: ";
+			error += std::to_string(i);
+			error += ". Buffer capacity is ";
+			error += std::to_string(itemsAmount_);
+			throw std::out_of_range(error);
+		}
 	}
 };
