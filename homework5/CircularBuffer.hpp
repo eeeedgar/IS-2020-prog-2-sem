@@ -28,44 +28,24 @@ class CircularBuffer
 		if (itemsAmount_ == 0)
 		{
 			data_[ptr] = t;
-			itemsAmount_++;
+			increaseItemAmount();
 		}
 		else
 		{
 			first_ = index(ptr + i);
 			data_[first_] = t;
-			itemsAmount_++;
+			increaseItemAmount();
 		}
 	}
 
 	void addFirst(T t)
 	{
-		if (itemsAmount_ == 0)
-		{
-			data_[first_] = t;
-			itemsAmount_++;
-		}
-		else
-		{
-			first_ = index(first_ - 1);
-			data_[first_] = t;
-			itemsAmount_++;
-		}
+		addItem(t, -1);
 	}
 
 	void addLast(T t)
 	{
-		if (itemsAmount_ == 0)
-		{
-			data_[last_] = t;
-			itemsAmount_++;
-		}
-		else
-		{
-			last_ = index(last_ + 1);
-			data_[last_] = t;
-			itemsAmount_++;
-		}
+		addItem(t, 1);
 	}
 
 	T &first() const
@@ -85,13 +65,13 @@ class CircularBuffer
 		return i;
 	}
 
-	void addItem()
+	void increaseItemAmount()
 	{
 		if (itemsAmount_ < capacity_)
 			itemsAmount_++;
 	}
 
-	void deleteItem()
+	void decreaseItemAmount()
 	{
 		if (itemsAmount_ > 0)
 			itemsAmount_--;
