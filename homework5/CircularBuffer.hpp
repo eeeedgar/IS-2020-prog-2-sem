@@ -1,4 +1,118 @@
 #include <iostream>
+#include <iterator>
+
+
+template <class T>
+class CircularBuffer;
+
+template <class T>
+class Iterator : public std::iterator<std::random_access_iterator_tag, T>
+{
+ private:
+	Iterator(T* p)
+		: p_(p)
+	{
+	};
+	T* p_;
+ public:
+	friend class CircularBuffer<T>;
+	using iterator_category = std::random_access_iterator_tag;
+	using value_type = T;
+	using difference_type = std::ptrdiff_t;
+	using pointer = value_type*;
+	using reference = value_type&;
+
+	Iterator(const Iterator& it)
+		: p_(it.p_)
+	{
+	}
+
+	bool operator!=(Iterator const& other) const
+	{
+		return p_ != other.p_;
+	}
+
+	typename Iterator::reference operator=(Iterator const& other)
+	{
+		*p_ = *other.p_;
+		return *p_;
+	}
+
+	bool operator==(Iterator const& other) const
+	{
+		return !(*this != other);
+	}
+
+	typename Iterator::reference& operator*() const
+	{
+		return *p_;
+	}
+
+	typename Iterator::reference& operator[](unsigned int n) const
+	{
+		return *(p_ + n);
+	}
+
+	Iterator& operator+=(int x)
+	{
+		p_ += x;
+		return *this;
+	}
+
+	Iterator& operator-=(int x)
+	{
+		*this += x * (-1);
+		return *this;
+	}
+
+	Iterator operator-(int x) const
+	{
+		return Iterator(p_ - x);
+	}
+
+	Iterator operator+(int x) const
+	{
+		return Iterator(p_ + x);
+	}
+
+	T operator-(Iterator x)
+	{
+		return (p_ - x.p_);
+	}
+
+	bool operator<(const Iterator& other) const
+	{
+		return other.p_ < this->p_;
+	}
+
+	bool operator>(const Iterator& other) const
+	{
+		return other.p_ > this->p_;
+	}
+
+	bool operator<=(const Iterator& other) const
+	{
+		return !(*this < other);
+	}
+
+	bool operator>=(const Iterator& other) const
+	{
+		return !(other < *this);
+	}
+
+	Iterator& operator++()
+	{
+		p_++;
+		return *this;
+	}
+
+	Iterator& operator--()
+	{
+		p_--;
+		return *this;
+	}
+};
+
 
 
 template <class T>
@@ -19,29 +133,8 @@ class CircularBuffer
 		data_ = new T[capacity];
 	}
 
-	void addItem(T t, int i)	//	-1 - first, 1 - last
-	{
-		int ptr = first_;
-		if (i == 1)
-			ptr = last_;
-
-		if (itemsAmount_ == 0)
-		{
-			data_[ptr] = t;
-			increaseItemAmount();
-		}
-		else
-		{
-			ptr = index(ptr + i);
-			data_[ptr] = t;
-			increaseItemAmount();
-		}
-		std::cout << first_ << " " << last_ << " " << ptr << std::endl;
-	}
-
 	void addFirst(T t)
 	{
-		//addItem(t, -1);
 		if (itemsAmount_ == 0)
 		{
 			data_[first_] = t;
@@ -55,12 +148,10 @@ class CircularBuffer
 			data_[first_] = t;
 			increaseItemAmount();
 		}
-		std::cout << first_ << " " << last_ << std::endl;
 	}
 
 	void addLast(T t)
 	{
-		//addItem(t, 1);
 		if (itemsAmount_ == 0)
 		{
 			data_[last_] = t;
@@ -74,7 +165,6 @@ class CircularBuffer
 			data_[last_] = t;
 			increaseItemAmount();
 		}
-		std::cout << first_ << " " << last_ << std::endl;
 	}
 
 	void delFirst()
@@ -168,4 +258,18 @@ class CircularBuffer
 			throw std::out_of_range(error);
 		}
 	}
+
+	friend class Iterator<T>;
+	typedef Iterator<T> iterator;
+	typedef Iterator<const T> const_iterator;
+	iterator begin() const
+	{
+		return iterator(data_ + first_);
+	}
+
+	iterator end() const
+	{
+		return iterator(data_ + itemsAmount_ + 1);
+	}
+
 };
