@@ -1,19 +1,21 @@
-#include <iostream>
 #include <iterator>
 
-
-template <class T>
+template <typename T>
 class CircularBuffer;
 
-template <class T>
+template <typename T>
 class Iterator : public std::iterator<std::random_access_iterator_tag, T>
 {
  private:
-	Iterator(T* p)
-		: p_(p)
+	Iterator(T* p, int first, int capacity, int items)
+		: data_(p), first_(first), capacity_(capacity), current_(items)
 	{
 	};
-	T* p_;
+	T* data_;
+	int first_;
+	int capacity_;
+	int current_;
+
  public:
 	friend class CircularBuffer<T>;
 	using iterator_category = std::random_access_iterator_tag;
@@ -23,253 +25,245 @@ class Iterator : public std::iterator<std::random_access_iterator_tag, T>
 	using reference = value_type&;
 
 	Iterator(const Iterator& it)
-		: p_(it.p_)
+		: data_(it.data_), first_(it.first_), capacity_(it.capacity_), current_(it.current_)
 	{
-	}
+	};
 
-	bool operator!=(Iterator const& other) const
+	Iterator& operator=(Iterator const& other)
 	{
-		return p_ != other.p_;
-	}
-
-	typename Iterator::reference operator=(Iterator const& other)
-	{
-		*p_ = *other.p_;
-		return *p_;
-	}
-
-	bool operator==(Iterator const& other) const
-	{
-		return !(*this != other);
-	}
-
-	typename Iterator::reference& operator*() const
-	{
-		return *p_;
-	}
-
-	typename Iterator::reference& operator[](unsigned int n) const
-	{
-		return *(p_ + n);
-	}
-
-	Iterator& operator+=(int x)
-	{
-		p_ += x;
+		data_ = other.data_;
+		first_ = other.first_;
+		capacity_ = other.capacity_;
+		current_ = other.current_;
 		return *this;
-	}
+	};
+
+	T& operator*() const
+	{
+		return data_[(first_ + current_) % capacity_];
+	};
+
+	T* operator->()
+	{
+		return &current_;
+	};
+
+	Iterator& operator+=(difference_type x)
+	{
+		current_ = current_ + x;
+		return *this;
+	};
 
 	Iterator& operator-=(int x)
 	{
-		*this += x * (-1);
+		current_ = current_ - x;
 		return *this;
-	}
-
-	Iterator operator-(int x) const
-	{
-		return Iterator(p_ - x);
-	}
+	};
 
 	Iterator operator+(int x) const
 	{
-		return Iterator(p_ + x);
-	}
+		return Iterator(data_, first_, capacity_, current_ + x);
+	};
 
-	T operator-(Iterator x)
+	Iterator operator-(difference_type x)
 	{
-		return (p_ - x.p_);
-	}
+		return Iterator(data_, first_, capacity_, current_ - x);
+	};
+
+	bool operator!=(Iterator const& other) const
+	{
+		return other.current_ != current_;
+	};
+
+	bool operator==(Iterator const& other) const
+	{
+		return not (*this != other);
+	};
 
 	bool operator<(const Iterator& other) const
 	{
-		return other.p_ < this->p_;
-	}
+		return other.current_ < current_;
+	};
 
 	bool operator>(const Iterator& other) const
 	{
-		return other.p_ > this->p_;
-	}
-
-	bool operator<=(const Iterator& other) const
-	{
-		return !(*this < other);
-	}
+		return other.current_ > current_;
+	};
 
 	bool operator>=(const Iterator& other) const
 	{
 		return !(other < *this);
-	}
+	};
+
+	bool operator<=(const Iterator& other) const
+	{
+		return !(*this < other);
+	};
 
 	Iterator& operator++()
 	{
-		p_++;
+		current_++;
 		return *this;
-	}
+	};
 
-	Iterator& operator--()
+	Iterator operator++(int)
 	{
-		p_--;
+		Iterator buffer(*this);
+		++buffer;
+		return buffer;
+	};
+
+	Iterator operator--()
+	{
+		current_--;
 		return *this;
-	}
+	};
+
+	Iterator& operator--(int)
+	{
+		Iterator buffer(*this);
+		--buffer;
+		return buffer;
+	};
+
+	friend Iterator operator+(Iterator::difference_type x, Iterator it)
+	{
+		return it + x;
+	};
+
+	friend Iterator::difference_type operator-(const Iterator& it1, const Iterator& it2)
+	{
+		return it1.current_ - it2.current_;
+	};
 };
 
-
-
-template <class T>
+template <typename T>
 class CircularBuffer
 {
  private:
-	T *data_;
-	int capacity_;
-	int first_;
-	int last_;
-	int itemsAmount_;
+	T* data_;
+	unsigned int capacity_;
+	unsigned int first_;
+	unsigned int items_;
+
  public:
-	explicit CircularBuffer(int capacity)
-		: capacity_(capacity)
-		, first_(0)
-		, last_(0)
+	CircularBuffer(int capacity)
+		: capacity_(capacity), first_(0), items_(0)
 	{
-		data_ = new T[capacity];
-	}
+		data_ = new T[capacity + 1];
+	};
 
-	void addFirst(T t)
+	void addLast(T x)
 	{
-		if (itemsAmount_ == 0)
-		{
-			data_[first_] = t;
-			increaseItemAmount();
-		}
-		else
-		{
-			first_ = index(first_ - 1);
-			if (first_ == last_)
-				last_ = index(last_ - 1);
-			data_[first_] = t;
-			increaseItemAmount();
-		}
-	}
+		data_[index(first_ + items_)] = x;
+		if (items_ < capacity_)
+			items_++;
+	};
 
-	void addLast(T t)
+	void addFirst(T x)
 	{
-		if (itemsAmount_ == 0)
-		{
-			data_[last_] = t;
-			increaseItemAmount();
-		}
+		if (first_ == 0)
+			first_ = capacity_ - 1;
 		else
-		{
-			last_ = index(last_ + 1);
-			if (last_ == first_)
-				first_ = index(first_ + 1);
-			data_[last_] = t;
-			increaseItemAmount();
-		}
-	}
+			first_--;
+
+		data_[first_] = x;
+
+		if (items_ < capacity_)
+			items_++;
+	};
+
+	T& first() const
+	{
+		if (items_ == 0)
+			throw std::runtime_error("Empty buffer.");
+		return data_[first_];
+	};
+
+	T& last() const
+	{
+		if (items_ == 0)
+			throw std::runtime_error("Empty buffer.");
+		return data_[index(first_ + items_ - 1)];
+	};
 
 	void delFirst()
 	{
-		data_[first_] = 0;
 		first_ = index(first_ + 1);
-		decreaseItemAmount();
-	}
+		items_--;
+	};
 
 	void delLast()
 	{
-		data_[last_] = 0;
-		last_ = index(last_ - 1);
-		decreaseItemAmount();
-	}
+		items_--;
+	};
 
-	T &first() const
+	T& operator[](unsigned int i)
 	{
-		return data_[first_];
-	}
-
-	T &last() const
-	{
-		return data_[last_];
-	}
-
-	int index(int i) const
-	{
-		if (i >= capacity_)
-			return (i) % capacity_;
-		return i;
-	}
-
-	void increaseItemAmount()
-	{
-		if (itemsAmount_ < capacity_)
-			itemsAmount_++;
-	}
-
-	void decreaseItemAmount()
-	{
-		if (itemsAmount_ > 0)
-			itemsAmount_--;
-	}
-
-	void changeCapacity(int newCapacity)
-	{
-		int itemsFit = (itemsAmount_ < newCapacity) ? itemsAmount_ : newCapacity;
-		T *buf = new T[newCapacity];
-		for (int i = 0; i < itemsFit; i++)
+		if (i < items_ and i < capacity_)
+			return data_[index(first_ + i)];
+		else
 		{
-			buf[i] = data_[index(first_ + i)];
+			if (items_ == 0)
+				throw std::range_error("Out of Range. Buffer is empty");
+			std::string error_message = "Out of Range. Index: ";
+			error_message += std::to_string(i);
+			error_message += ". Buffer capacity is ";
+			error_message += std::to_string(items_);
+			error_message += ".";
+			throw std::out_of_range(error_message);
 		}
-		itemsAmount_ = itemsFit;
+	};
+
+	T& operator[](unsigned int i) const
+	{
+		if (i < capacity_ and i < items_)
+			return data_[index(first_ + i)];
+		else
+		{
+			std::string error_message = "Element";
+			error_message += std::to_string(i);
+			error_message += " doesn't exist.";
+			throw std::range_error(error_message);
+		}
+
+	};
+
+	void changeCapacity(unsigned int new_capacity)
+	{
+		T* buf = new T[new_capacity];
+		unsigned int i = first_;
+		unsigned int j = i;
+
+		for (unsigned int k = 0; k < items_; k++)
+		{
+			buf[j] = data_[i];
+
+			i = (i + 1) % capacity_;
+			j = (j + 1) % new_capacity;
+		}
+
+		capacity_ = new_capacity;
+		delete[] data_;
 		data_ = buf;
-		first_ = 0;
-		last_ = itemsAmount_ - 1;
-		capacity_ = newCapacity;
-	}
-
-	void show() const
-	{
-		for (int i = 0; i < capacity_; i++)
-			std::cout << data_[i] << " ";
-		std::cout << std::endl;
-	}
-
-	T operator[](int i) const
-	{
-		if (i < itemsAmount_ and i >= 0)
-			return data_[index(first_ + i)];
-		else
-		{
-			std::string error = "Element ";
-			error += std::to_string(i);
-			error += " doesn't exist";
-			throw std::range_error(error);
-		}
-	}
-
-	T &operator[](int i)
-	{
-		if (i < itemsAmount_ and i >= 0)
-			return data_[index(first_ + i)];
-		else
-		{
-			std::string error = "Out of Range. Index: ";
-			error += std::to_string(i);
-			error += ". Buffer capacity is ";
-			error += std::to_string(itemsAmount_);
-			throw std::out_of_range(error);
-		}
-	}
+	};
 
 	friend class Iterator<T>;
 	typedef Iterator<T> iterator;
 	typedef Iterator<const T> const_iterator;
+
 	iterator begin() const
 	{
-		return iterator(data_ + first_);
-	}
+		return iterator(data_, first_, capacity_, 0);
+	};
 
 	iterator end() const
 	{
-		return iterator(data_ + itemsAmount_ + 1);
-	}
+		return iterator(data_, first_, capacity_, items_);
+	};
 
+	int index(int i) const
+	{
+		return i % capacity_;
+	}
 };
