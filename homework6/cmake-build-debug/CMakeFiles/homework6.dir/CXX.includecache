@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/repos/IS-2020-prog-2-sem/homework6/RubicksCube.hpp
+vector
+-
+iostream
+-
+
+C:/repos/IS-2020-prog-2-sem/homework6/main.cpp
+iostream
+-
+RubicksCube.hpp
+C:/repos/IS-2020-prog-2-sem/homework6/RubicksCube.hpp
+

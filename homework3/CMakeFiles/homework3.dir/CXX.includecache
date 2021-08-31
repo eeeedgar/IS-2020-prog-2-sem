@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/repos/IS-2020-prog-2-sem/homework3/transport.cpp
+transport.h
+C:/repos/IS-2020-prog-2-sem/homework3/transport.h
+
+C:/repos/IS-2020-prog-2-sem/homework3/transport.h
+string
+-
+vector
+-
+stdio.h
+-
+algorithm
+-
+math.h
+-
+

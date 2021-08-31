@@ -1,0 +1,3 @@
+C:/repos/IS-2020-prog-2-sem/homework4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/repos/IS-2020-prog-2-sem/homework4/cmake-build-debug/CMakeFiles/homework4.dir
+C:/repos/IS-2020-prog-2-sem/homework4/cmake-build-debug/CMakeFiles/edit_cache.dir
